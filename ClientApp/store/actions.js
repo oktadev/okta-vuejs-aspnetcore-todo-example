@@ -5,6 +5,12 @@ const sleep  = ms => {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+const addAuthHeader = () => {
+  return {
+    headers: { 'Authorization': 'Bearer ' + oktaAuth.client.tokenManager.get('access_token').accessToken }
+  }
+}
+
 export const actions = {
   checkLoggedIn({ commit }) {
     if (oktaAuth.client.tokenManager.get('access_token')) {
@@ -75,7 +81,7 @@ export const actions = {
   },
 
   async getAllTodos({ commit }) {
-    let response = await axios.get('/api/todo')
+    let response = await axios.get('/api/todo', addAuthHeader())
     
     if (response && response.data) {
       let updatedTodos = response.data

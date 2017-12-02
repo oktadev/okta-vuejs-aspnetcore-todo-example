@@ -9,6 +9,7 @@ using Vue2Spa.Services;
 namespace Vue2Spa.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class TodoController : Controller
     {
         private readonly ITodoItemService _todoItemService;

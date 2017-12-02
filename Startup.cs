@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Vue2Spa.Services;
 
 namespace Vue2Spa
@@ -32,6 +33,13 @@ namespace Vue2Spa
             // Add framework services.
             services.AddMvc();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.Authority = "https://atko-corporation-application.oktapreview.com/oauth2/default";
+                options.Audience = "api://default";
+            });
+
             services.AddSingleton<ITodoItemService, FakeTodoItemService>();
         }
 
@@ -55,6 +63,8 @@ namespace Vue2Spa
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
