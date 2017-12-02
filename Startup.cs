@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Vue2Spa.Services;
+using Okta.Sdk;
+using Okta.Sdk.Configuration;
 
 namespace Vue2Spa
 {
@@ -22,6 +24,12 @@ namespace Vue2Spa
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
             Configuration = builder.Build();
         }
 
@@ -40,7 +48,13 @@ namespace Vue2Spa
                 options.Audience = "api://default";
             });
 
-            services.AddSingleton<ITodoItemService, FakeTodoItemService>();
+            services.AddSingleton<ITodoItemService, OktaTodoItemService>();
+
+            services.AddSingleton<IOktaClient>(new OktaClient(new OktaClientConfiguration
+            {
+                OrgUrl = "https://atko-corporation-application.oktapreview.com",
+                Token = Configuration["okta:token"]
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -90,17 +90,25 @@ export const actions = {
   },  
 
   async addTodo({ dispatch }, data) {
-    // Todo: save a new to-do item
+    await axios.post(
+      '/api/todo',
+      { text: data.text },
+      addAuthHeader())
+
     await dispatch('getAllTodos')
   },
 
   async toggleTodo({ dispatch }, data) {
-    // Todo: toggle to-do item completed/not completed
+    await axios.post(
+      '/api/todo/' + data.id,
+      { completed: data.completed },
+      addAuthHeader())
+
     await dispatch('getAllTodos')
   },
 
   async deleteTodo({ dispatch }, id) {
-    // Todo: delete to-do item
+    await axios.delete('/api/todo/' + id, addAuthHeader())
     await dispatch('getAllTodos')
   }
 }
