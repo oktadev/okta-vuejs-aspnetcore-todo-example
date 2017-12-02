@@ -1,4 +1,5 @@
 import axios from 'axios'
+import oktaAuth from '../oktaAuth'
 
 const sleep  = ms => {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -6,18 +7,66 @@ const sleep  = ms => {
 
 export const actions = {
   checkLoggedIn({ commit }) {
-    // Todo: commit('loggedIn') if the user is already logged in
+    if (oktaAuth.client.tokenManager.get('access_token')) {
+      let idToken = oktaAuth.client.tokenManager.get('id_token')
+      commit('loggedIn', idToken.claims)
+    }
   },
-
+  
   async login({ dispatch, commit }, data) {
-    // Todo: log the user in
-    commit('loggedIn', { userName: data.email })
+    let authResponse
+    try {
+      authResponse = await oktaAuth.client.signIn({
+        username: data.email,
+        password: data.password
+      });
+    }
+    catch (err) {
+      let message = err.message || 'Login error'
+      dispatch('loginFailed', message)
+      return
+    }
+  
+    if (authResponse.status !== 'SUCCESS') {
+      console.error("Login unsuccessful, or more info required", response.status)
+      dispatch('loginFailed', 'Login error')
+      return
+    }
+  
+    let tokens
+    try {
+      tokens = await oktaAuth.client.token.getWithoutPrompt({
+        responseType: ['id_token', 'token'],
+        scopes: ['openid', 'email', 'profile'],
+        sessionToken: authResponse.sessionToken,
+      })
+    }
+    catch (err) {
+      let message = err.message || 'Login error'
+      dispatch('loginFailed', message)
+      return
+    }
+  
+    // Verify ID token validity
+    try {
+      await oktaAuth.client.token.verify(tokens[0])
+    } catch (err) {
+      dispatch('loginFailed', 'An error occurred')
+      console.error('id_token failed validation')
+      return
+    }
+  
+    oktaAuth.client.tokenManager.add('id_token', tokens[0]);
+    oktaAuth.client.tokenManager.add('access_token', tokens[1]);
+  
+    commit('loggedIn', tokens[0].claims)
   },
-
+  
   async logout({ commit }) {
-      // Todo: log the user out
-      commit('loggedOut')
-  },
+    oktaAuth.client.tokenManager.clear()
+    await oktaAuth.client.signOut()
+    commit('loggedOut')
+  },  
 
   async loginFailed({ commit }, message) {
     commit('loginError', message)
