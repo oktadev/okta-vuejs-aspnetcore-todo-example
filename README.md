@@ -1,10 +1,10 @@
 # ASP.NET Core API with Vue UI
 
-This example app shows how to build a simple to-do manager with an ASP.NET Core backend API and a Vue.js frontend.
+This example shows how to build a simple to-do app with an ASP.NET Core backend API and a Vue.js frontend.
 
 Read [Build a Secure To-Do App with Vue, ASP.NET Core, and Okta](https://scotch.io/tutorials/build-a-secure-to-do-app-with-vuejs-aspnet-core-and-okta) to see how this app was created.
 
-**Prerequisites:** [.NET Core 2.0] [Java 8](https://dot.net/core) and [Node.js](https://nodejs.org/).
+**Prerequisites:** [.NET Core 2.0](https://dot.net/core) and [Node.js](https://nodejs.org/).
 
 > [Okta](https://developer.okta.com/) has Authentication and User Management APIs that reduce development time with instant-on, scalable user infrastructure. Okta's intuitive API and expert support make it easy for developers to authenticate, manage and secure users and roles in any application.
 
@@ -25,14 +25,14 @@ cd okta-vuejs-aspnetcore-todo-example
 This will get a copy of the project locally. To install all of the dependencies and start the app, run:
 
 ```bash
-npm instal
+npm install
 
 dotnet run
 ```
 
 ### Create an application in Okta
 
-You will need to create an OpenID Connect application in Okta to get your values to perform authentication. 
+You will need to create an OpenID Connect application in Okta to to perform authentication. 
 
 Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don’t have an account) and navigate to **Applications** > **Add Application**. Click **Single-Page App**, click **Next**, and give the app a name you’ll remember. Change both the Base URI and Login redirect URI to `http://localhost:5000` and click **Done**.
 
@@ -53,7 +53,7 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 #### Client configuration
 
-For the client, set the `issuer` and copy the `clientId` of the Okta application into `ClientApp/oktaAuth.js`.
+Set the `issuer` and copy the `clientId` of the Okta application into `ClientApp/oktaAuth.js`.
 
 ```javascript
 const org = 'https://{yourOktaDomain}.com',
