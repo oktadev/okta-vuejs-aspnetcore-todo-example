@@ -22,13 +22,7 @@ git clone git@github.com:oktadeveloper/okta-vuejs-aspnetcore-todo-example.git
 cd okta-vuejs-aspnetcore-todo-example
 ```
 
-This will get a copy of the project locally. To install all of the dependencies and start the app, run:
-
-```bash
-npm install
-
-dotnet run
-```
+This will download a copy of the project.
 
 ### Create an application in Okta
 
@@ -62,15 +56,26 @@ const org = 'https://{yourOktaDomain}.com',
       authorizationServer = 'default'
 ```
 
+### Start the app
+
+To install all of the dependencies and start the app, run:
+
+```bash
+npm install
+
+dotnet run
+```
+
 ## Links
 
 This example uses the following libraries provided by Okta:
 
 * [Okta Auth SDK](https://github.com/okta/okta-auth-js)
+* [Okta .NET SDK](https://github.com/okta/okta-sdk-dotnet)
 
 ## Help
 
-Please post any questions as comments on the [blog post](https://scotch.io/tutorials/build-a-secure-to-do-app-with-vuejs-aspnet-core-and-okta), or visit our [Okta Developer Forums](https://devforum.okta.com/). You can also email developers@okta.com if you would like to create a support ticket.
+Please post any questions as comments on the [blog post](https://scotch.io/tutorials/build-a-secure-to-do-app-with-vuejs-aspnet-core-and-okta), or visit the [Okta Developer Forums](https://devforum.okta.com/). You can also email developers@okta.com if you would like to create a support ticket.
 
 ## License
 
