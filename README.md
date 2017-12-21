@@ -36,7 +36,7 @@ Set the issuer (authority) in `Startup.cs`.
 
 **Note:** The value of `{yourOktaDomain}` should be something like `dev-123456.oktapreview.com`. Make sure you don't include `-admin` in the value!
 
-```properties
+```csharp
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
