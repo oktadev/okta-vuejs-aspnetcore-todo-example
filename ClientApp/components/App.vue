@@ -1,8 +1,13 @@
 <template>
   <div class="app-container">
     <div class="app-view">
-      <template v-if="$route.matched.length">
-        <router-view></router-view>
+      <template v-if="authenticated">
+        <button v-if='authenticated' v-on:click='logout' id='logout-button'>Log out</button>
+        <router-view/>
+      </template>
+
+      <template v-else>
+        <button v-on:click='$auth.loginRedirect'>Log in</button>
       </template>
     </div>
   </div>
@@ -10,9 +15,30 @@
 
 <script>
 export default {
-  computed: {
-    loggedIn () {
-      return this.$store.state.loggedIn
+  name: 'app',
+  data: function () {
+    return {
+      authenticated: false
+    }
+  },
+  created () {
+    this.isAuthenticated()
+  },
+  watch: {
+    // Everytime the route changes, check for auth status
+    '$route': 'isAuthenticated'
+  },
+  methods: {
+    async isAuthenticated () {
+      this.authenticated = await this.$auth.isAuthenticated()
+      console.log('authenticated?', this.authenticated)
+    },
+    async logout () {
+      await this.$auth.logout()
+      await this.isAuthenticated()
+
+      // Navigate back to home
+      this.$router.push({ path: '/' })
     }
   }
 }
@@ -48,6 +74,7 @@ h1, h2 {
 .app-view {
   background: #fff;
   min-width: 400px;
+  min-height: 200px;
   padding: 20px 25px 15px 25px;
   margin: 30px;
 	position: relative;
