@@ -1,19 +1,24 @@
 <template>
   <div class="dashboard">
-    <h2>{{name}}, here's your to-do list</h2>
+    <template v-if="!this.$parent.authenticated">
+      <p>You gotta log in!</p>
+    </template>
 
-    <input class="new-todo"
-        autofocus
-        autocomplete="off"
-        placeholder="What needs to be done?"
-        @keyup.enter="addTodo">
+    <template v-if="this.$parent.authenticated">
+      <h2>{{name}}, here's your to-do list</h2>
 
-    <ul class="todo-list">
-      <todo-item v-for="(todo, index) in todos" :key="index" :item="todo"></todo-item>
-    </ul>
-    
-    <p>{{ remaining }} remaining</p>
-    <router-link to="/logout">Log out</router-link>
+      <input class="new-todo"
+          autofocus
+          autocomplete="off"
+          placeholder="What needs to be done?"
+          @keyup.enter="addTodo">
+
+      <ul class="todo-list">
+        <todo-item v-for="(todo, index) in todos" :key="index" :item="todo"></todo-item>
+      </ul>
+      
+      <p>{{ remaining }} remaining</p>
+    </template>
   </div>
 </template>
 
@@ -23,7 +28,7 @@ import TodoItem from './TodoItem'
 export default {
   components: { TodoItem },
   mounted() {
-      this.$store.dispatch('getAllTodos')
+      this.$store.dispatch('getAllTodos', this.$auth)
   },
   computed: {
     name () {

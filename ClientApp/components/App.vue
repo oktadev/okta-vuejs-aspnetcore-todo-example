@@ -1,9 +1,10 @@
 <template>
   <div class="app-container">
     <div class="app-view">
+      <router-view />
+
       <template v-if="authenticated">
-        <button v-if='authenticated' v-on:click='logout' id='logout-button'>Log out</button>
-        <router-view/>
+        <button v-if='authenticated' v-on:click='logout'>Log out</button>
       </template>
 
       <template v-else>

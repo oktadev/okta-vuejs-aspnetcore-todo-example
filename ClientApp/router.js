@@ -18,8 +18,8 @@ const router = new Router({
   mode: 'history',
   base: __dirname,
   routes: [
+    { path: '/', component: Dashboard },
     { path: '/implicit/callback', component: Auth.handleCallback() },
-    { path: '/', component: Dashboard }
   ]
 })
 

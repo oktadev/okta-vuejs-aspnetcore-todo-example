@@ -1,14 +1,14 @@
 import axios from 'axios'
 
-const addAuthHeader = () => {
+const addAuthHeader = async (auth) => {
   return {
-    headers: { 'Authorization': 'Bearer ' + oktaAuth.client.tokenManager.get('access_token').accessToken }
+    headers: { 'Authorization': 'Bearer ' + await auth.getAccessToken() }
   }
 }
 
 export const actions = {
-  async getAllTodos({ commit }) {
-    let response = await axios.get('/api/todo', addAuthHeader())
+  async getAllTodos({ commit }, auth) {
+    let response = await axios.get('/api/todo', await addAuthHeader(auth))
     
     if (response && response.data) {
       let updatedTodos = response.data
@@ -16,26 +16,26 @@ export const actions = {
     }
   },  
 
-  async addTodo({ dispatch }, data) {
+  async addTodo({ dispatch }, auth, data) {
     await axios.post(
       '/api/todo',
       { text: data.text },
-      addAuthHeader())
+      addAuthHeader(auth))
 
     await dispatch('getAllTodos')
   },
 
-  async toggleTodo({ dispatch }, data) {
+  async toggleTodo({ dispatch }, auth, data) {
     await axios.post(
       '/api/todo/' + data.id,
       { completed: data.completed },
-      addAuthHeader())
+      addAuthHeader(auth))
 
     await dispatch('getAllTodos')
   },
 
-  async deleteTodo({ dispatch }, id) {
-    await axios.delete('/api/todo/' + id, addAuthHeader())
+  async deleteTodo({ dispatch }, auth, id) {
+    await axios.delete('/api/todo/' + id, addAuthHeader(auth))
     await dispatch('getAllTodos')
   }
 }
