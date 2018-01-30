@@ -28,7 +28,9 @@ This will download a copy of the project.
 
 You will need to create an OpenID Connect application in Okta to to perform authentication. 
 
-Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don’t have an account) and navigate to **Applications** > **Add Application**. Click **Single-Page App**, click **Next**, and give the app a name you’ll remember. Change both the Base URI and Login redirect URI to `http://localhost:5000` and click **Done**.
+Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don’t have an account) and navigate to **Applications** > **Add Application**. Click **Single-Page App**, click **Next**, and give the app a name you’ll remember.
+
+Change the Base URI to `http://localhost:5000`, and the login redirect URI to `http://localhost:5000/implicit/callback`. Click **Done**.
 
 #### Server configuration
 
@@ -47,13 +49,17 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 #### Client configuration
 
-Set the `issuer` and copy the `clientId` of the Okta application into `ClientApp/oktaAuth.js`.
+Set the `issuer` and copy the `clientId` of the Okta application into `ClientApp/router.js`.
 
 ```javascript
-const org = 'https://{yourOktaDomain}.com',
-      clientId = '{clientId}',
-      redirectUri = 'http://localhost:5000',
-      authorizationServer = 'default'
+Vue.use(Auth, {
+    // Replace this with your Okta domain:
+  issuer: 'https://{yourOktaDomain}.com/oauth2/default',
+  // Replace this with the client ID of the Okta app you just created:
+  client_id: '{clientId}',
+  redirect_uri: 'http://localhost:5000/implicit/callback',
+  scope: 'openid profile email'
+})
 ```
 
 ### Start the app
@@ -70,7 +76,7 @@ dotnet run
 
 This example uses the following libraries provided by Okta:
 
-* [Okta Auth SDK](https://github.com/okta/okta-auth-js)
+* [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue)
 * [Okta .NET SDK](https://github.com/okta/okta-sdk-dotnet)
 
 ## Help
