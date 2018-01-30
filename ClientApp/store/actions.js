@@ -14,28 +14,28 @@ export const actions = {
       let updatedTodos = response.data
       commit('loadTodos', updatedTodos)
     }
-  },  
+  },
 
   async addTodo({ dispatch }, data) {
     await axios.post(
       '/api/todo',
       { text: data.text },
       await addAuthHeader(data.$auth))
-
-    await dispatch('getAllTodos', data.$auth)
+  
+    await dispatch('getAllTodos', { $auth: data.$auth })
   },
-
+  
   async toggleTodo({ dispatch }, data) {
     await axios.post(
       '/api/todo/' + data.id,
       { completed: data.completed },
       await addAuthHeader(data.$auth))
-
-    await dispatch('getAllTodos', data.$auth)
+  
+    await dispatch('getAllTodos', { $auth: data.$auth })
   },
-
+  
   async deleteTodo({ dispatch }, data) {
     await axios.delete('/api/todo/' + data.id, await addAuthHeader(data.$auth))
-    await dispatch('getAllTodos', data.$auth)
+    await dispatch('getAllTodos', { $auth: data.$auth })
   }
 }

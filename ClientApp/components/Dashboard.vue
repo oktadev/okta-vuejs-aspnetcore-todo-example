@@ -31,7 +31,7 @@ export default {
   computed: {
     name () {
       if (this.$parent.userInfo) {
-        return this.$parent.userInfo.name
+        return this.$parent.userInfo.given_name
       } else {
         return 'Hello'
       }

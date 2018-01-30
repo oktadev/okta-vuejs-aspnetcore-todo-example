@@ -9,8 +9,10 @@ Vue.use(Router)
 
 // Add the $auth plugin from the Okta Vue SDK to the Vue instance
 Vue.use(Auth, {
-  issuer: 'https://atko-corporation-application.oktapreview.com/oauth2/default',
-  client_id: '0oads7fzw6eKtYuDf0h7',
+  // Replace this with your Okta domain:
+  issuer: 'https://{yourOktaDomain}.com/oauth2/default',
+  // Replace this with the client ID of the Okta app you just created:
+  client_id: '{clientId}',
   redirect_uri: 'http://localhost:5000/implicit/callback',
   scope: 'openid profile email'
 })

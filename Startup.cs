@@ -44,7 +44,7 @@ namespace Vue2Spa
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = "https://atko-corporation-application.oktapreview.com/oauth2/default";
+                options.Authority = "https://{yourOktaDomain}.com/oauth2/default";
                 options.Audience = "api://default";
             });
 
@@ -52,7 +52,7 @@ namespace Vue2Spa
 
             services.AddSingleton<IOktaClient>(new OktaClient(new OktaClientConfiguration
             {
-                OrgUrl = "https://atko-corporation-application.oktapreview.com",
+                OrgUrl = "https://{yourOktaDomain}.com",
                 Token = Configuration["okta:token"]
             }));
         }
