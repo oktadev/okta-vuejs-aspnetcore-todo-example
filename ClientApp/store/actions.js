@@ -16,26 +16,26 @@ export const actions = {
     }
   },  
 
-  async addTodo({ dispatch }, auth, data) {
+  async addTodo({ dispatch }, data) {
     await axios.post(
       '/api/todo',
       { text: data.text },
-      addAuthHeader(auth))
+      await addAuthHeader(data.$auth))
 
-    await dispatch('getAllTodos')
+    await dispatch('getAllTodos', data.$auth)
   },
 
-  async toggleTodo({ dispatch }, auth, data) {
+  async toggleTodo({ dispatch }, data) {
     await axios.post(
       '/api/todo/' + data.id,
       { completed: data.completed },
-      addAuthHeader(auth))
+      await addAuthHeader(data.$auth))
 
-    await dispatch('getAllTodos')
+    await dispatch('getAllTodos', data.$auth)
   },
 
-  async deleteTodo({ dispatch }, auth, id) {
-    await axios.delete('/api/todo/' + id, addAuthHeader(auth))
-    await dispatch('getAllTodos')
+  async deleteTodo({ dispatch }, data) {
+    await axios.delete('/api/todo/' + data.id, await addAuthHeader(data.$auth))
+    await dispatch('getAllTodos', data.$auth)
   }
 }

@@ -27,12 +27,13 @@ import TodoItem from './TodoItem'
 
 export default {
   components: { TodoItem },
-  mounted() {
-      this.$store.dispatch('getAllTodos', this.$auth)
-  },
   computed: {
     name () {
-      return this.$store.state.userName
+      if (this.$parent.userInfo) {
+        return this.$parent.userInfo.name
+      } else {
+        return null
+      }
     },
     todos () {
       return this.$store.state.todos
@@ -50,7 +51,7 @@ export default {
       text = text.trim()
 
       if (text.length) {
-        this.$store.dispatch('addTodo', { text })
+        this.$store.dispatch('addTodo', { $auth: this.$auth, text })
       }
       
       e.target.value = ''

@@ -7,22 +7,24 @@
 
     <label v-text="item.text"></label>
 
-    <button class="delete" @click="deleteTodo(item.id)">
+    <button class="delete" @click="deleteTodo({ id: item.id })">
       <span class="glyphicon glyphicon-trash"></span>
     </button>
   </li>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
 export default {
   props: ['item'],
   methods: {
-    ...mapActions([
-      'toggleTodo',
-      'deleteTodo'
-    ])
+    toggleTodo (data) {
+      data.$auth = this.$auth
+      this.$store.dispatch('toggleTodo', data)
+    },
+    deleteTodo (data) {
+      data.$auth = this.$auth
+      this.$store.dispatch('deleteTodo', data)
+    }
   }
 }
 </script>

@@ -19,24 +19,38 @@ export default {
   name: 'app',
   data: function () {
     return {
-      authenticated: false
+      authenticated: false,
+      userInfo: null
     }
   },
   created () {
-    this.isAuthenticated()
+    this.checkAuthentication()
   },
   watch: {
     // Everytime the route changes, check for auth status
-    '$route': 'isAuthenticated'
+    '$route': 'checkAuthentication'
   },
   methods: {
-    async isAuthenticated () {
+    async checkAuthentication () {
+      let previouslyLoggedIn = this.authenticated
       this.authenticated = await this.$auth.isAuthenticated()
-      console.log('authenticated?', this.authenticated)
+
+      let justLoggedIn = !previouslyLoggedIn && this.authenticated
+      if (justLoggedIn) {
+        this.$store.dispatch('getAllTodos', this.$auth)
+        this.userInfo = await this.$auth.getUser()
+      }
+
+      let justLoggedOut = previouslyLoggedIn && !this.authenticated
+      if (justLoggedOut) {
+        console.log('just logged out!')
+        this.userInfo = null
+        //this.$store.commit('clearTodos')
+      }
     },
     async logout () {
       await this.$auth.logout()
-      await this.isAuthenticated()
+      await this.checkAuthentication()
 
       // Navigate back to home
       this.$router.push({ path: '/' })

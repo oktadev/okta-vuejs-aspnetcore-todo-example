@@ -1,12 +1,15 @@
 import router from '../router'
 
 export const state = {
-  todos: [],
-  userName: null
+  todos: []
 }
 
 export const mutations = {
   loadTodos(state, todos) {
     state.todos = todos || [];
+  },
+
+  clearTodos(state) {
+    state.todos = [];
   }
 }
