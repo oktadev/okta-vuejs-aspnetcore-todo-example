@@ -1,5 +1,3 @@
-import router from '../router'
-
 export const state = {
   todos: []
 }

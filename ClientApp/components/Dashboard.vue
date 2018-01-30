@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard">
     <template v-if="!this.$parent.authenticated">
-      <p>You gotta log in!</p>
+      <h2>Welcome!</h2>
+      <p>Log in to view your to-do list.</p>
     </template>
 
     <template v-if="this.$parent.authenticated">
@@ -32,7 +33,7 @@ export default {
       if (this.$parent.userInfo) {
         return this.$parent.userInfo.name
       } else {
-        return null
+        return 'Hello'
       }
     },
     todos () {

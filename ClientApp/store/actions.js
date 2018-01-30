@@ -7,8 +7,8 @@ const addAuthHeader = async (auth) => {
 }
 
 export const actions = {
-  async getAllTodos({ commit }, auth) {
-    let response = await axios.get('/api/todo', await addAuthHeader(auth))
+  async getAllTodos({ commit }, data) {
+    let response = await axios.get('/api/todo', await addAuthHeader(data.$auth))
     
     if (response && response.data) {
       let updatedTodos = response.data

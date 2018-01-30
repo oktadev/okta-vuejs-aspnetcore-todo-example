@@ -4,7 +4,7 @@
       <router-view />
 
       <template v-if="authenticated">
-        <button v-if='authenticated' v-on:click='logout'>Log out</button>
+        <button v-on:click='logout'>Log out</button>
       </template>
 
       <template v-else>
@@ -27,7 +27,7 @@ export default {
     this.checkAuthentication()
   },
   watch: {
-    // Everytime the route changes, check for auth status
+    // Every time the route changes, check the auth status
     '$route': 'checkAuthentication'
   },
   methods: {
@@ -37,15 +37,14 @@ export default {
 
       let justLoggedIn = !previouslyLoggedIn && this.authenticated
       if (justLoggedIn) {
-        this.$store.dispatch('getAllTodos', this.$auth)
+        this.$store.dispatch('getAllTodos', { $auth: this.$auth })
         this.userInfo = await this.$auth.getUser()
       }
 
       let justLoggedOut = previouslyLoggedIn && !this.authenticated
       if (justLoggedOut) {
-        console.log('just logged out!')
         this.userInfo = null
-        //this.$store.commit('clearTodos')
+        this.$store.commit('clearTodos')
       }
     },
     async logout () {
