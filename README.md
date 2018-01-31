@@ -2,7 +2,7 @@
 
 This example shows how to build a simple to-do app with an ASP.NET Core backend API and a Vue.js frontend.
 
-Read [Build a Secure To-Do App with Vue, ASP.NET Core, and Okta](https://scotch.io/tutorials/build-a-secure-to-do-app-with-vuejs-aspnet-core-and-okta) to see how this app was created.
+Read [Build a Secure To-Do App with Vue, ASP.NET Core, and Okta](https://developer.okta.com/blog/2018/01/31/build-secure-todo-app-vuejs-aspnetcore) to see how this app was created.
 
 **Prerequisites:** [.NET Core 2.0](https://dot.net/core) and [Node.js](https://nodejs.org/).
 
@@ -28,7 +28,7 @@ This will download a copy of the project.
 
 You will need to create an OpenID Connect application in Okta to to perform authentication. 
 
-Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don’t have an account) and navigate to **Applications** > **Add Application**. Click **Single-Page App**, click **Next**, and give the app a name you’ll remember.
+Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account) and navigate to **Applications** > **Add Application**. Click **Single-Page App**, click **Next**, and give the app a name you'll remember.
 
 Change the Base URI to `http://localhost:5000`, and the login redirect URI to `http://localhost:5000/implicit/callback`. Click **Done**.
 
@@ -81,7 +81,7 @@ This example uses the following libraries provided by Okta:
 
 ## Help
 
-Please post any questions as comments on the [blog post](https://scotch.io/tutorials/build-a-secure-to-do-app-with-vuejs-aspnet-core-and-okta), or visit the [Okta Developer Forums](https://devforum.okta.com/). You can also email developers@okta.com if you would like to create a support ticket.
+Please post any questions as comments on the [blog post](https://developer.okta.com/blog/2018/01/31/build-secure-todo-app-vuejs-aspnetcore), or visit the [Okta Developer Forums](https://devforum.okta.com/). You can also email developers@okta.com if you would like to create a support ticket.
 
 ## License
 
