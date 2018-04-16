@@ -18,7 +18,7 @@ Read [Build a Secure To-Do App with Vue, ASP.NET Core, and Okta](https://develop
 To install this example application, run the following commands:
 
 ```bash
-git clone git@github.com:oktadeveloper/okta-vuejs-aspnetcore-todo-example.git
+git clone https://github.com/oktadeveloper/okta-vuejs-aspnetcore-todo-example.git
 cd okta-vuejs-aspnetcore-todo-example
 ```
 
